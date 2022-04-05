@@ -5,13 +5,14 @@ import { fetchCoinHistory } from "../api";
 
 const Table = styled.table`
   width: 440px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.bgColor};
   border-collapse: separate;
   border-spacing: 0 10px;
   border-radius: 10px;
   thead {
     th {
-      text-shadow: 2px 3px 0px rgba(228, 205, 205, 0.5);
+      font-weight: 600;
     }
   }
   tbody {

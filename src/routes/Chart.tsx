@@ -3,6 +3,8 @@ import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 import styled from "styled-components";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 const SelectType = styled.select`
   border-radius: 10px;
@@ -38,6 +40,7 @@ interface IChartProps {
 }
 
 function Chart({ coinId }: IChartProps) {
+  const isDark = useRecoilValue(isDarkAtom);
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId],
     () => fetchCoinHistory(coinId),
@@ -95,18 +98,26 @@ function Chart({ coinId }: IChartProps) {
                   yaxis: {
                     labels: {
                       formatter: (value) => `$${value.toFixed(2)}`,
+                      style: {
+                        colors: "whitesmoke",
+                      },
                     },
                   },
                   xaxis: {
                     type: "datetime",
+                    labels: {
+                      style: {
+                        colors: "whitesmoke",
+                      },
+                    },
                   },
                   theme: {
-                    mode: "dark",
+                    mode: isDark ? "dark" : "light",
                   },
                   chart: {
                     height: 500,
                     width: 500,
-                    background: "rgba(0, 0, 0, 0.5)",
+                    background: isDark ? "rgba(138, 135, 135, 0.1)" : "#2f3640",
                   },
                 }}
               />
@@ -132,19 +143,27 @@ function Chart({ coinId }: IChartProps) {
                   yaxis: {
                     labels: {
                       formatter: (value) => `$${value.toFixed(2)}`,
+                      style: {
+                        colors: "whitesmoke",
+                      },
                     },
                   },
                   xaxis: {
                     type: "datetime",
                     categories: data?.map((day) => day.time_close) ?? [],
+                    labels: {
+                      style: {
+                        colors: "whitesmoke",
+                      },
+                    },
                   },
                   theme: {
-                    mode: "dark",
+                    mode: isDark ? "dark" : "light",
                   },
                   chart: {
                     height: 500,
                     width: 500,
-                    background: "rgba(0, 0, 0, 0.5)",
+                    background: isDark ? "rgba(138, 135, 135, 0.1)" : "#2f3640",
                   },
                   stroke: {
                     curve: "smooth",

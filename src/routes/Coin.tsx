@@ -44,7 +44,14 @@ const InfoContainer = styled.div`
   margin: 20px 0;
   padding: 20px 15px;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.textColor};
+`;
+
+const SpanContainer = styled.div`
+  span {
+    color: ${(props) => props.theme.nonBoxColor};
+  }
 `;
 
 const Info = styled.div`
@@ -63,11 +70,11 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.textColor};
   padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>
-    props.isActive ? props.theme.accentColor : props.theme.textColor};
+    props.isActive ? props.theme.accentColor : props.theme.bgColor};
   a {
     display: block;
   }
@@ -176,7 +183,9 @@ function Coin() {
             <Info>SYMBOL: {infoData?.symbol}</Info>
             <Info>price: {`$${tickersData?.quotes.USD.price.toFixed(2)}`}</Info>
           </InfoContainer>
-          <Info as="span">{infoData?.description}</Info>
+          <SpanContainer>
+            <Info as="span">{infoData?.description}</Info>
+          </SpanContainer>
           <InfoContainer>
             <Info>TOTAL SUPPLY: {tickersData?.total_supply}</Info>
             <Info>MAX SUPPLY: {tickersData?.max_supply}</Info>
